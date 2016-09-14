@@ -9,9 +9,12 @@ uses
 type
   TForm1 = class(TForm)
     Button1: TButton;
+    Button2: TButton;
+    Memo1: TMemo;
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -53,6 +56,18 @@ begin
 
 
 
+end;
+
+procedure TForm1.Button2Click(Sender: TObject);
+var
+  str:string;
+begin
+   PY.AddPath('./Script');
+   PY.Import('GetUrl');   //如果两个路径都有同名模块，以最近的路径为准把
+   PY.CurrModule := 'GetUrl';
+   str := PY.CallMethod('Go');
+   Memo1.Lines.Clear;
+   Memo1.Lines.Text := str;
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
