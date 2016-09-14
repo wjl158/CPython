@@ -12,9 +12,10 @@ uses
 type
   TPython = class
   public
-    ModuleName: string;
-    PyObject: Pointer;
-    constructor Create(ModuleName: string; path: string = ''); virtual;
+    List: TStringList;
+    CurrModule: string;
+    constructor Create();    virtual;
+    destructor Destroy; override;
 
 //    //调用模块方法  有参数
 //    function CallMethod(MethodName: string; Param: string): string; overload;
@@ -43,6 +44,9 @@ type
     function ExecStr(Code: string): Boolean;
 
     function AddPath(path: string): Boolean;
+
+    function Import(ModuleName:string): Boolean;
+    function GetCurrModuleObj(CurrModule: string): Pointer;
 
 
   end;
@@ -90,6 +94,7 @@ type
 
 
 
+
 implementation
 
 
@@ -118,7 +123,11 @@ function My_PyRun_Simple_String; cdecl; external 'PyInterface.dll';
 function TPython.AddPath(path: string): Boolean;
 begin
   Result := ExecStr('import sys');
-//  Result := ExecStr(Format('sys.path.append(''%s'')', [path]));
+  Result := ExecStr(Format('sys.path.append(''%s'')', [path]));
+  if not Result then
+  begin
+    ShowMessage('添加路径失败');
+  end;
 
 end;
 
@@ -151,24 +160,26 @@ end;
 
 procedure TPython.CallProc(MethodName, Param: string);
 begin
-  My_Py_CallProcByParam(Self.PyObject, PAnsiChar(AnsiString(MethodName)), PWideChar(WideString(Param)));
+  My_Py_CallProcByParam(GetCurrModuleObj(CurrModule), PAnsiChar(AnsiString(MethodName)), PWideChar(WideString(Param)));
 end;
 
 procedure TPython.CallProc(MethodName: string);
 begin
-  My_Py_CallProcNoParam(Self.PyObject, PAnsiChar(AnsiString(MethodName)));
+  My_Py_CallProcNoParam(GetCurrModuleObj(CurrModule), PAnsiChar(AnsiString(MethodName)));
 end;
 
-constructor TPython.Create(ModuleName: string; path: string);
+constructor TPython.Create;
 begin
-  Self.ModuleName := ModuleName;
-  if path = '' then
-    PyObject := My_PyImport_ImportModule(nil, PAnsiChar(AnsiString(ModuleName)))
-  else
-    PyObject := My_PyImport_ImportModule(PAnsiChar(AnsiString(path)), PAnsiChar(AnsiString(ModuleName)));
-
+  List := TStringList.Create;
 end;
 
+
+destructor TPython.Destroy;
+begin
+
+  inherited;
+  List.Free;
+end;
 
 function TPython.ExecStr(Code: string): Boolean;
 begin
@@ -178,15 +189,55 @@ begin
    Result := False;
 end;
 
+function TPython.GetCurrModuleObj(CurrModule: string): Pointer;
+var
+  I: integer;
+begin
+  I := List.IndexOf(CurrModule);
+  if I >= 0 then
+  begin
+    Result := Pointer(List.Objects[I]);
+  end
+  else
+  begin
+    Result := nil;
+    ShowMessage('获取模块失败');
+  end;
+end;
+
+function TPython.Import(ModuleName: string): Boolean;
+var
+  PyObject: Pointer;
+begin
+  Result := False;
+  if List.IndexOf(ModuleName) >= 0 then
+  begin
+    ShowMessage('已存在同名的模块');
+    Exit;
+  end;
+
+  PyObject := My_PyImport_ImportModule(nil, PAnsiChar(AnsiString(ModuleName)));
+  if PyObject = nil then
+  begin
+    ShowMessage('导入模块失败');
+    Exit;
+  end
+  else
+  begin
+      List.AddObject(ModuleName, TObject(PyObject));
+      Result := True;
+  end;
+end;
+
 function TPython.CallMethod(MethodName, Param: string): string;
 begin
-  Result := My_Py_CallMethodByParam(Self.PyObject,PAnsiChar(AnsiString(MethodName)), PWideChar(WideString(Param)));
+  Result := My_Py_CallMethodByParam(GetCurrModuleObj(CurrModule),PAnsiChar(AnsiString(MethodName)), PWideChar(WideString(Param)));
 end;
 
 
 function TPython.CallMethod(MethodName: string): string;
 begin
-  Result := My_Py_CallMethodNoParam(Self.PyObject,PAnsiChar(AnsiString(MethodName)));
+  Result := My_Py_CallMethodNoParam(GetCurrModuleObj(CurrModule),PAnsiChar(AnsiString(MethodName)));
 end;
 
 end.

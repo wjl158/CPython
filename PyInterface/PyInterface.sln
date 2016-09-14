@@ -5,6 +5,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PyInterface", "PyInterface\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestDllC", "TestDllC\TestDllC.vcxproj", "{65C1050D-6CFE-4537-9278-222BF7CEA028}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PyBoost", "..\PyBoost\PyBoost.vcxproj", "{334C5369-5E5C-4E13-ADD9-AAC7EC023128}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -19,6 +21,10 @@ Global
 		{65C1050D-6CFE-4537-9278-222BF7CEA028}.Debug|Win32.Build.0 = Debug|Win32
 		{65C1050D-6CFE-4537-9278-222BF7CEA028}.Release|Win32.ActiveCfg = Release|Win32
 		{65C1050D-6CFE-4537-9278-222BF7CEA028}.Release|Win32.Build.0 = Release|Win32
+		{334C5369-5E5C-4E13-ADD9-AAC7EC023128}.Debug|Win32.ActiveCfg = Debug|Win32
+		{334C5369-5E5C-4E13-ADD9-AAC7EC023128}.Debug|Win32.Build.0 = Debug|Win32
+		{334C5369-5E5C-4E13-ADD9-AAC7EC023128}.Release|Win32.ActiveCfg = Release|Win32
+		{334C5369-5E5C-4E13-ADD9-AAC7EC023128}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

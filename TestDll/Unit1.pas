@@ -34,6 +34,12 @@ var
   str: string;
 begin
 
+   PY.AddPath('./');
+   PY.AddPath('./Script');
+   PY.Import('PyTest001');   //如果两个路径都有同名模块，以最近的路径为准把
+
+   PY.CurrModule := 'PyTest001';  //设置当前模块
+
    str := PY.CallMethod('GetDictValue', '{''a'':''你好'',}');  //返回字典中a的值 你好
    ShowMessage(str);
 
@@ -58,12 +64,7 @@ begin
   begin
     ShowMessage(str);
   end;
-  PY := TPython.Create('PyTest001');
-//   if PY.ExecStr('import os') then
-//     ShowMessage('true');
-
-   if PY.AddPath('./Script') then
-     ShowMessage('add');
+  PY := TPython.Create;
 
 
 end;
