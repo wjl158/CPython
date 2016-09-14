@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PyInterface", "PyInterface\PyInterface.vcxproj", "{5CD17309-5F7A-4DB1-BBBB-0E6B68F7D0E0}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestDllC", "TestDllC\TestDllC.vcxproj", "{65C1050D-6CFE-4537-9278-222BF7CEA028}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5CD17309-5F7A-4DB1-BBBB-0E6B68F7D0E0}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5CD17309-5F7A-4DB1-BBBB-0E6B68F7D0E0}.Debug|Win32.Build.0 = Debug|Win32
+		{5CD17309-5F7A-4DB1-BBBB-0E6B68F7D0E0}.Release|Win32.ActiveCfg = Release|Win32
+		{5CD17309-5F7A-4DB1-BBBB-0E6B68F7D0E0}.Release|Win32.Build.0 = Release|Win32
+		{65C1050D-6CFE-4537-9278-222BF7CEA028}.Debug|Win32.ActiveCfg = Debug|Win32
+		{65C1050D-6CFE-4537-9278-222BF7CEA028}.Debug|Win32.Build.0 = Debug|Win32
+		{65C1050D-6CFE-4537-9278-222BF7CEA028}.Release|Win32.ActiveCfg = Release|Win32
+		{65C1050D-6CFE-4537-9278-222BF7CEA028}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
